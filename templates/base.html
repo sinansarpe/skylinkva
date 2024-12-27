@@ -64,29 +64,17 @@
         </div>
     </nav>
             
-    <ul class="sidenav" id="mobile-demo">
+    <ul class="sidenav blue-grey darken-2 white-text" id="mobile-demo">
+      <li><img src="{{airline.airline_logo.url}}" alt="" style="width:100%;height:auto;object-fit:contain;"></li>
+      <li><a href="{% url 'roster' %}" class="grey-text text-lighten-3">Roster</a></li>
+      <li><a href="{% url 'staff' %}" class="grey-text text-lighten-3">Staff</a></li>
+      <li><a href="{% url 'resources' %}" class="grey-text text-lighten-3">Resources</a></li>
+      <li><a href="{% url 'gallery' %}" class="grey-text text-lighten-3">Gallery</a></li>
       {% if user.is_authenticated %}
-      <li><span id="currentTime" style="padding-right:3px;"></span><span style="padding-right:10px;">Z</span></li>
-      <li><b> | </b></li>
-      <li><a href="{% url 'roster' %}" class="grey-text text-darken-2">Roster</a></li>
-      <li><a href="{% url 'staff' %}" class="grey-text text-darken-2">Staff</a></li>
-      <li><a href="{% url 'resources' %}" class="grey-text text-darken-2">Resources</a></li>
-      <li><a href="#" class="grey-text text-darken-2">Gallery</a></li>
-      <li><b> | </b></li>
-      <li><a href="{% url 'dashboard' %}" class="grey-text text-darken-2">Dashboard</a></li>
-      <li><b> | </b></li>
+      <li><a href="{% url 'dashboard' %}" class="grey-text  text-lighten-3">Dashboard</a></li>
       <li><a href="{% url 'signout' %}" class="orange-text">Logout</a></li>
-
-      <li><a href="#" class="orange-text">Office</a></li>
-
-      <li><span id="currentTime" style="padding-right:3px;"></span><span style="padding-right:10px;">Z</span></li>
-      <li><b> | </b></li>
-      <li><a href="{% url 'roster' %}" class="grey-text text-darken-2">Roster</a></li>
-      <li><a href="#" class="grey-text text-darken-2">Staff</a></li>
-      <li><a href="#" class="grey-text text-darken-2">Resources</a></li>
-      <li><b> | </b></li>                
+      {% else %}
       <li><a href="{% url 'signin' %}" class="orange-text">Sign-in</a></li>
-
       {% endif %}
     </ul>
 </header>
