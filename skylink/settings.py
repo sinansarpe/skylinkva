@@ -170,7 +170,6 @@ DEFAULT_CONTACT_EMAIL = 'contact@skylinkva.com'
 # SESSION EXPIRE BROWSER CLOSE
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-CSRF_TRUSTED_ORIGINS = ['https://www.skylinkva.com', 'https://skylinkva.com']
-
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-ACCOUNT_DOMAIN = 'skylinkva.com'
+#CSRF_TRUSTED_ORIGINS = ['https://www.skylinkva.com', 'https://skylinkva.com']
+#ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+#ACCOUNT_DOMAIN = 'skylinkva.com'
