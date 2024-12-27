@@ -1,0 +1,69 @@
+{% extends "resources.html" %}
+{% block ranking %}
+
+
+<div>
+    {% for ranking in ranking %}
+    <div><h5>{{ranking.title}}</h5></div>
+
+    <div>
+        {{ranking.content|safe}}
+    </div>
+    {% endfor %}
+</div>
+
+<div id="rank-table">
+
+    <div class="" style="padding-top:2vh;">
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header blue-grey darken-3 blue-grey-text text-lighten-4">SKYLINK RANKS FOR PILOTS</strong></div>
+            </li>
+        </ul>
+    </div> 
+
+
+    <table class="highlight centered">
+        <thead>
+            <tr>
+                <th>Rank Title</th>
+                <th>Abbr</th>
+                <th>Badge</th>
+                <th>Hours</th>
+                <th>PIREPs</th>
+                <th>Points</th>
+                <th>B.Points</th>
+                <th>Pilot Badge</th>
+                <th>ATC Badge</th>
+
+
+            </tr>
+        </thead>
+        {% for rank in ranks %}
+        <tbody>
+            <tr>
+                <td>{{rank.pilot_title}}</td>
+                <td>{{rank.pilot_title_abbr}}</td>
+                <td><img src="{{rank.pilot_badge.url}}" alt=""></td>
+                <td>{{rank.req_hours}}</td>
+                <td>{{rank.req_pireps}}</td>
+                <td>{{rank.req_points}}</td>
+                <td>{{rank.req_bonus_points}}</td>
+                <td><img src="{{rank.req_pilot_badge.pilot_badge.url}}" alt="" class="tooltipped" data-position="bottom" data-tooltip="{{rank.req_pilot_badge}}"></td>
+                <td>{% if rank.req_atc_badge is None %}Not Required{% else %}<img src="{{rank.req_atc_badge.atc_badge.url}}" alt=""  class="tooltipped" data-position="bottom" data-tooltip="{{rank.req_atc_badge}}">{% endif %}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <div class="">
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header blue-grey darken-3 blue-grey-text text-lighen-4"></div>
+            </li>
+        </ul>
+    </div> 
+    <div> For further information about IVAO Pilot/ATC Ranking you may want to visit <a href="https://www.ivao.aero" class="orange-text" target=_blank> IVAO Official Website.</a></div>
+
+</div>
+
+{% endblock ranking %}

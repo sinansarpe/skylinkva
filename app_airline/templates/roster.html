@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/pages/roster.css' %}">
+{% endblock page_css %}
+{% block roster %}
+{% autoescape off %}
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <h3 class="">Roster</h3>
+        <div><i>Pilots, making company bigger.</i></div>
+    </div>
+</div>
+<div class="top-space"></div>
+
+<div class="container">
+    <div class="row">
+    {% for roster in roster  %}
+    <div class="col s12 m6 l4 xl4">
+        <div class="card horizontal hoverable grey lighten-4">
+          <div class="card-image">
+            <img src="">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+                <div class="biz-card">
+                  <div class="image-container">
+                          <img class="image-left roster-ivao-branding-logo" src="https://ivao.aero/publrelat/branding/svg_logos/{{roster.division_name.division_abbr}}.svg"/>
+                          <img class="image-right roster-airline-logo" src="{{airline.airline_logo.url}}" alt="">
+                  </div>
+                  <div class="orange-text right-align roster-on-trial">{% if roster.is_onTrial is True %}<i><strong> on trial</i></strong>{% else %}{% endif %}</div>
+                  </div>
+                  <div class="biz-card-names-container">
+                  <p ><strong><span>{{roster.first_name|capfirst}} {{roster.last_name|slice:1 |capfirst}},</span></strong> <i class="grey-text">{{roster.pilot_title}}</i></p>
+                  <div class="biz-card-location-container">
+                      <div>{% if roster.division_name|upper == "TR" %}Skylink Headquarters{% else %}Skylink Branch Office, {{roster.division_name.division_name|slice:":-8" }}{% endif %}</div>
+                      <div> {% if roster.staff_title is not None %}{{roster.staff_title}} {% else %} Airline Pilot {% endif %}</div> 
+                  </div>
+                </div>
+            </div>
+            <div class="card-action blue-grey darken-1">
+                <div class="row  white-text biz-card-action-container">
+                  <div class="left-align col s6 left"><i class="fa-solid fa-phone"></i><a href="https://ivao.aero/Member.aspx?ID={{roster.ivao_id}}" class="white-text" target=_blank>{{roster.ivao_id}} </a><strong></div>
+                  <div class="right-align col s6"><i class="fa-solid fa-address-card"></i></strong> {{roster.vamsys_id}}</div>
+                </div>
+                
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>    
+</div>
+
+
+
+<!-- TESTING -->
+<div class="container">
+          {% for q in data %}
+                <p>{{data}}</p>
+        {% endfor %}
+</div>
+{{online_users}}
+
+{% endautoescape %}
+{% endblock roster %}
+{% block page_js %}{% endblock page_js %}
+

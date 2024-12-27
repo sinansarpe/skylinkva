@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load materializecss %}
+
+{% block login %}
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <h3 class="">Welcome Back!</h3>
+        <div><i>We were waiting for you  so long, nice to see you again.</i></div>
+    </div>
+</div>
+<div class="top-space"></div>
+
+
+
+
+<div class="row" style="margin-top:3vh;">
+    <div class="card col s12 m12 l4 xl4 offset-l4 offset-xl4" style="padding-bottom:1%;">
+        <div class="card-image" style="width:100%;height:100%;"></div>
+            <div class="">
+                    <h5>Login Form</h5>
+                    <p>You don't have an account? <a href="{% url 'signup' %}" class="orange-text">Create one now!</a></p>
+            </div>
+            <form method="post" class=""> {% csrf_token %}
+            {{form|materializecss}}
+            <button class="btn orange waves-effect waves-light" type="submit" name="action" style="margin-top:0.5vh;">SIGNIN
+            <i class="material-icons right">send</i>
+            </button>
+            </form>
+            <div style="margin-top:1vh;"><a href = "/u/password-reset/">Reset my password.</a><div>
+        
+        </div>
+    </div>
+</div>
+
+{% endblock login %}

@@ -1,0 +1,149 @@
+{% extends "office.html" %}
+
+{% block approve_applicant %}
+
+<div style="">
+    <h5>How to approve a pilot?</h5>
+
+    <div class="grey lighten-3" style="padding:1vh;margin-bottom:1vh;">
+        <p><b>First Step :</b></p>
+        <p>Check pilots' name, IVAO-ID and division is correct by clicking the <b>IVAO-ID</b></p>
+        <p>Invite applicant to vsMSYS. Use applicant's <b>same first and last name as in IVAO</b> in vaMSYS. </p>
+        <p>If everything is OK, click on <b>Invited</b></p>
+        <p><i>Wait until VAMSYS registration is completed by applicant on vaMSYS and VAMSYS-ID is assigned (<i class="grey-text text-lighten-1">SKL000X</i>)</i></p>
+
+    </div>
+
+    
+    <div class="row">
+        <div class="col s12 m12 l12 xl12">
+
+            <table class="centered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>IVAO-ID</th>
+                        <th>Applicant's Division</th>
+                        <th>Action</th>
+                        <th>Invited</th>
+                    </tr>
+                </thead>
+
+                {% for applicant in applicants  %}
+                <tbody>
+                    <tr>
+                        <td>{{applicant.first_name}} {{applicant.last_name}}</td>
+                        <td>{{applicant.email}}</td>
+                        <td><a href="https://ivao.aero/Login.aspx?r=Member.aspx?Id={{applicant.ivao_id}}" class="orange-text" target=_blank>{{applicant.ivao_id}}</a></td>
+                        <td>{{applicant.division_name.division_name}} | {{applicant.division_name}}</td>
+                       
+                        <td>
+                            <a href="https://vamsys.io/orwell/pilots/invites" class="orange-text" target=_blank> Send Invitation</a></td>
+
+                        <td>
+                            <a href="{% url 'invited' applicant.id %} ">Invited</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="center-align">No applicants to be invited on vaMSYS</td></tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+    <div class="grey lighten-4" style="padding:1vh;">
+        <p><b>Second Step :</b></p>
+        <p>Check <a href="https://vamsys.io/orwell/pilots/review" target=_blank class="orange-text">vaMSYS</a> regularly if applicant has completed his registration process and get vaMSYS-ID</p>
+        <p>When applicant get his vaMSYS-ID (<i>SKLXXXX</i>), register his ID with the form below.</p>
+
+
+    </div>
+
+</div>
+
+
+
+
+<div class="row">
+
+    <div class="col s12 m12 l12 xl12">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>IVAO-ID</th>
+                    <th>Invited</th>
+                    <th>Assign vaMSYS-ID</th>
+
+                </tr>
+            </thead>
+           
+            <tbody>
+              
+            {% for user in users  %}
+            <form action="" method="post" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <tr>
+                <td>
+                    {{user.first_name}} {{user.last_name}}
+                </td>
+                <td>
+                    {{user.email}}
+                </td>
+                <td>
+                    <a href="https://ivao.aero/Login.aspx?r=Member.aspx?Id={{user.ivao_id}}" class="orange-text" target=_blank>{{user.ivao_id}}</a>
+                </td>
+                <td>{% if user.is_invitation_sent is True %} <i class="material-icons green-text">check</i> {% else %} No {% endif %}</td>
+                <td>
+                <!-- Hidden input field for the user ID -->
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <!-- Input field for the vamsys_id -->
+                <input type="text" name="vamsys_id" value="{{ user.vamsys_id }}">
+                </td>
+
+                <td><button type="submit">Save Changes</button></td>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="center-align">No applicants to assign vaMSYS-ID</tr></td>
+            </tr>
+           
+            
+            {% endfor %}
+
+            </form>
+        </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#invitation-sent').click(function() {
+            $.ajax({
+                url: '/o/office/applicants/', // Replace with your actual URL
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}' // Include CSRF token for security
+                },
+
+            });
+        });
+    });
+    
+    
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+   
+</script>
+
+
+{% endblock approve_applicant %}

@@ -1,0 +1,16 @@
+{% extends "office.html" %}
+
+{% block confirm_delete %}
+
+
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete "{{ object.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn waves-effect waves-light red white-text" type="submit" name="action">YES, DELETE
+            <i class="material-icons right">send</i>
+          </button>
+        <a href="{% url 'upload_livery' %}">Cancel</a>
+    </form>
+
+{% endblock confirm_delete %}

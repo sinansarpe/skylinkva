@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block gallery %}
+
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <h3>Gallery</h3>
+        <div><i>Screenshots, which remind us of beuatiful moments of Skylink Flights.</i></div>
+
+
+    </div>
+</div>
+<div class="top-space"></div>
+
+
+<div class="container">
+    <div class="row">
+        {% for screenshot in screenshots  %}
+        <div class="col s12 m12 l3 xl3 materialboxed">
+            <div style="padding:0.1vh;">
+                <img src="{{screenshot.image.url}}" alt="" style="width:100%;height:100; object-fit:cover;">
+                <div class="grey-text text-lighten-1 right-align" style="font-size:.7vh;">Creator: {{screenshot.username.username}} | {{screenshot.uploaded_at|date:"d-m-Y"}} </div>
+            </div>
+        
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.materialboxed').materialbox();
+      });
+</script>
+
+
+
+{% endblock gallery %}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load materializecss %}
+
+{% block UserProfileForm %}
+{% if user.is_authenticated %}
+<h2>[{{user.username}}] Profil Bilgileri</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Profilimi Güncelle</button>
+
+</form>
+
+{% endif %}
+{% endblock UserProfileForm %}

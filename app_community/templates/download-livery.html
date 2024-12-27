@@ -1,0 +1,43 @@
+{% extends "dashboard.html" %}
+
+
+{% block download_livery %}
+
+<ul class="collection" style="margin-top:2vh;">
+    <li class="collection-item blue-grey darken-3 white-text">DOWNLOAD LIVERY</li>
+</ul>
+
+<div class="row">
+
+        {% for livery in liveries  %}
+        <div class="col s12 m12 l6 xl6">
+        <div class="card hoverable">
+          <div class="card-image">
+            <img src="{{livery.livery_image.url}}">
+            <span class="card-title"></span>
+          </div>
+          <div class="card-content">
+            <p>{{livery.title}}</p>
+          </div>
+          <div class="card-action blue-grey darken-3">
+            <a href="{{livery.livery.url}}">Download</a>
+          </div>  
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+{% endblock download_livery %}
+
+
+
+
+
+
+
+

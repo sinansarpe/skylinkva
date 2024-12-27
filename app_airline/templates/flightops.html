@@ -1,0 +1,93 @@
+{% extends "resources.html" %}
+
+{% block flightops %}
+
+<!-- BASE & HUBS -->
+
+<h5>Hubs, Fleet and Flights</h5>
+
+<p>The airports where we currently operate scheduled, charter and cargo operations are listed below.In addition to these airports, our operations are also carried out as charter airlines from other airports.The number of airports may increase as our fleet grows.</p>
+
+
+
+<div class="row">
+{% for basehubs in basehubs %}
+    <div class="col s12 m14 l4 xl4">
+        <div class="card hoverable blue-grey darken-3 blue-grey-text text-lighten-4">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" src="{{basehubs.image.url}}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator blue-grey-text text-lighten-4"><h5>{{basehubs.icao}} | {{basehubs.iata}}</h5> <span style="font-size:0.7vh;">{{basehubs.city}} {% if basehubs.is_base is True %}BASE {% else %}HUB{% endif %}</span><i class="material-icons right">more_vert</i></span>
+          
+          <p><a href="{{basehubs.link}}" class="orange-text" target=_blank>Airport Details</a></p>
+        </div>
+        <div class="card-reveal grey lighten-4">
+          <span class="card-title grey-text text-darken-4">About {% if basehubs.is_base is True %}BASE {% else %}HUB{% endif %}<i class="material-icons right">close</i></span>
+          <p class="blue-grey-text text-lighten-2">{{basehubs.airport}} is used for {% if basehubs.is_charter is True %} Charter {% endif %} {% if basehubs.is_scheduled is True %} Scheduled {% endif %} {% if basehubs.is_cargo is True %} Cargo {% endif %}Flights</p>
+          <p class="blue-grey-text text-lighten-2">There are both payware and freeware sceneries of airport {{basehubs.airport}} by well known publishers.</p>
+        </div>
+      </div>
+    </div>
+{% endfor %}          
+</div>
+
+<div class="divider" style="margin-bottom:1vh;"></div>
+{% for aircraft in aircrafts %}
+    <div class="col s12 m12 l6 xl6">
+        <div class="card hoverable blue-grey darken-3 blue-grey-text text-lighten-4">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" src="{{aircraft.image.url}}">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator blue-grey-text text-lighten-4"><p>{{aircraft.designator}} | {{aircraft.registration}}</p><span style="font-size:0.7vh;">{{aircraft.airport}}</span><i class="material-icons right">more_vert</i></span>
+          <span style="font-size:0.7vh;">{{aircraft.type_of_flight}} Flights</span><br><br>
+          <p><a href="{{basehubs.link}}" class="orange-text" target=_blank>Download Livery</a></p><img src="{{aircraft.designator.publisher_logo.url}}"  class="right-align" alt="" style="width:30%; margin-left:70%;margin-top:-80%;">
+        </div>
+        <div class="card-reveal grey lighten-4">
+          <span class="card-title grey-text text-darken-4">{{aircraft.designator.name}} | {{aircraft.designator}}<i class="material-icons right">close</i></span>
+          <p class="blue-grey-text text-lighten-2"><b>REGISTRATION: {{aircraft.registration}}</b></p>
+          <p class="blue-grey-text text-lighten-2"><b>ENGINE: {{aircraft.engine_type}}</b></p>
+
+          <p class="blue-grey-text text-lighten-2"><b>CONFIGURATION:</b> {{aircraft.max_passengers}} Passengers</p>
+          <p class="blue-grey-text text-lighten-2"><b>TYPE OF FLIGHT:</b> {{aircraft.type_of_flight}}</p>
+          <p class="blue-grey-text text-lighten-2"><b>BASE:</b> {{aircraft.airport}}</p>
+          <div classs="blue-grey darken-3" style="">
+            <img src="{{aircraft.designator.publisher_logo.url}}"  class="" alt="" style="width:50%;">
+          </div>
+        </div>
+      </div>
+    </div>
+{% endfor %}    
+
+</div>
+
+<div class="divider" style="margin-bottom:1vh;"></div>
+
+<div class="card col s12 m12 l12 xl12 orange white-text" style="padding:2vh;">
+  <h5>Scheduled Flights [Everyday]</h5>
+  <i>Charter Flights are listed at operations center.</i>
+      <table class="highlight" style="margin-top:1vh;">
+        <thead class="blue-grey darken-3 blue-grey-text text-lighten-3">
+          <tr>
+            <th>FLIGHT # | CS</th>
+            <th>DEPARTURE</th>
+            <th>ARRIVAL</th>
+            <th>AIRCRAFT</th>
+          </tr>
+        </thead>
+        {% for scheduled in s_flights  %}
+        <tbody>
+          <tr>
+            <td>I1 {{scheduled.flight_number}} | INK {{scheduled.callsign}}</td>
+            <td class="centered">{{scheduled.departure}}</td>
+            <td>{{scheduled.arrival}}</td>
+            <td>{{scheduled.aircraft.designator}} | {{scheduled.aircraft}}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+        
+      </table>
+<div>
+
+{% endblock flightops %}

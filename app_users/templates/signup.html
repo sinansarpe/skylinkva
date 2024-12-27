@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load materializecss %}
+{% block register %}
+
+
+
+<div class="row">
+    <div class="card col s12 m12 l6 xl4 offset-l3 offset-xl4" style="margin-top:8vh;">
+        <div style="padding-bottom:1vh;">
+            <h3>Registration Form</h3>
+            <p>Few things that you must know before filling this form.</p> 
+            <p>When you become a member of our website, you only become a member of the community. </p>
+            <p>If you want to become a SKYLINK Airlines pilot, you will need to check the <b>"I want to be your pilot"</b> box on the form. Thus, our administrators will send you an invitation for the airline registration by e-mail and that process may take couple of hours.</p>
+            <p>If your Division is not listed in the form, please select random one and we will add your division immediately.</p>
+        </div>
+        <form action="" method="post">{% csrf_token %}
+            {{form|materializecss}}
+        <div >
+            By becoming a member of our website with this Registration Form, you declare that you have read, understood and accepted our <a href="" class="orange-text">Privacy Policy.</a>
+            <p>
+            <label>
+                <input id="agree_checkbox" type="checkbox" />
+                <span>I have read, understood and accept it.</span>
+            </label>
+        </p>
+        </div>
+            
+            <button id="register_button" class="orange btn waves-effect waves-light disabled" type="submit" name="action" style="margin-top:1vh;margin-bottom:1vh;">SUBMIT
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock register %}
+{% block page-script %}
+<script>
+    $(document).ready(function() {
+        $('select').formSelect();
+        $("#ip_adresi").hide();
+        
+        const checkbox = document.querySelector('#agree_checkbox');
+        checkbox.addEventListener('change', handleChange);
+        function handleChange(e) {
+        $('#register_button').toggleClass('disabled')
+        }
+
+    });
+
+</script>
+{% endblock page-script %}
+

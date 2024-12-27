@@ -1,0 +1,30 @@
+{% extends "resources.html" %}
+
+{% block privacy %}
+<style>
+.justify {
+    text-align: justify;
+    text-justify: inter-word;
+}
+</style>
+<ul class="collection">
+    <li class="collection-item blue-grey darken-1 white-text">PRIVACY POLICY</li>
+</ul>
+
+{% for privacy in privacy  %}
+
+<h5>{{privacy.title}}</h5>
+<p class="justify">{{privacy.content|safe}}</p>
+
+{% endfor %}
+
+<ul class="collection">
+    <li class="collection-item blue-grey darken-1 white-text" style="height:2vh;"></li>
+</ul>
+
+{% endblock privacy %}
+
+
+
+
+

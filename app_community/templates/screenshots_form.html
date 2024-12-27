@@ -1,0 +1,108 @@
+{% extends "dashboard.html" %}
+{% load materializecss %}
+{% block screenshots_form  %}
+<style>
+   .btn {
+        background-color:#37474f; 
+    }
+</style>
+
+<ul class="collection">
+    <li class="collection-item blue-grey darken-3 white-text">UPLOAD YOUR SCREENSHOT</li>
+</ul>
+
+
+<div class="row">
+    <div id="screenshot-form" class="col s12" style="margin-bottom:3vh;">
+        <!-- SCREENSHOTS -->
+        <div id="share-screenshot" class="card myDiv" style="padding:2vh;">
+            <h5>Share Your Screenshot with Community</h5>
+            {% if form.errors %}
+                <ul>
+                    {% for error in form.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="">You can upload maximum 12 images. Now you have {{ss_waiting_approval}} <br>If you have filled that quota please delete one or more to upload a new one.</div>
+                <div class=""><b>All images must be 16:9 ratio to be approved.</b></div>
+                <div>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {{ ssform|materializecss}}
+                <div class="right-align">
+                    <button class="orange lighten-1 btn waves-effect waves-light" type="submit" name="action">Upload<i class="material-icons right">file_upload</i></button>
+                </div>
+            </form>
+        </div> 
+        <!-- SCREENSHOTS ENDS HERE -->
+    </div>
+</div>
+
+<ul class="collection">
+    <li class="collection-item blue-grey darken-1 white-text">SCREENSHOTS WAITING APPROVAL</li>
+</ul>
+    
+<div class="row">
+    {% for ss_waiting in ss_waiting %}
+    <div class="col s12 m12 l4 xl4">
+        <div class="card">
+        <div class="card-image">
+            <img src="{{ss_waiting.image.url}}">
+            <span class="card-title"></span>
+            <a  href="{% url 'delete_image' ss_waiting.id %}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons tooltipped" data-position="top" data-tooltip="Click to delete">remove</i></a>
+        </div>
+        <div class="card-content">
+            <p style="font-size:.6vh;">Waiting for Approval | {{ss_waiting.uploaded_at|date:"d M, Y"}}</p>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<ul class="collection">
+    <li class="collection-item blue-grey darken-1 white-text">SCREENSHOTS PUBLISHED IN GALLERY</li>
+</ul>
+
+<div class="row">
+    {% for ss_user in ss_user %}
+    <div class="col s12 m12 l4 xl4">
+        <div class="card">
+        <div class="card-image">
+            <img src="{{ss_user.image.url}}">
+            <span class="card-title"></span>
+            <a  href="{% url 'delete_published' ss_user.id %}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons tooltipped" data-position="top" data-tooltip="Click to delete">remove</i></a>
+        </div>
+        <div class="card-content">
+            <p style="font-size:.6vh;"><b>Published in Gallery</b> | {{ss_user.uploaded_at|date:"d M, Y"}}</p>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $('.tooltipped').tooltip();
+      });    
+</script>
+
+{% endblock screenshots_form  %}
+
+
+
+
+
+
+

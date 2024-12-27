@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block office %}
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <a href="{% url 'office' %}" class="white-text"><h3 class="">OFFICE</h3></a>
+        <div><i>Page, routine jobs take place.</i></div>
+    </div>
+</div>
+<div class="top-space"></div>
+
+
+<div class="container">
+    <div class="row">
+        
+        <!-- LEFT -->
+        <div class="col s12 m12 l3 xl3">
+            <div class="collection">
+                <a id="privacy" href="#" class="collection-item blue-grey darken-3 blue-grey-text text-lighten-4">STAFF MENU</a>
+                <a id="rules" href="{% url 'applicants' %}" class="collection-item">Approve Applicant {% if applicants_count is not 0 %}<span class="new badge blue-grey darken-3 white-text">{{applicants_count}}</span>{% else %} {% endif %} </a>
+                <a id="" href="{% url 'approve_screenshots' %}" class="collection-item">Approve Screenshot {% if applicants_count is not 0 %}<span class="new badge blue-grey darken-3 white-text">{{approving_ss_count}}</span>{% else %} {% endif %} </a>
+                <a id="" href="{% url 'upload_livery' %}" class="collection-item">Upload Livery</a>
+                <a id="ranking" href="#!" class="collection-item">Staff Mailing</a>
+            </div>
+        </div>
+        <!-- RIGHT -->
+        <div class="col s12 m12 l8 xl8 offset-l1 offset-xl1">
+            {% block approve_ss %}              {% endblock approve_ss %}
+            {% block approve_applicant %}       {% endblock approve_applicant %}
+            {% block upload_livery %}           {% endblock upload_livery %}
+            {% block confirm_delete %}          {% endblock confirm_delete %}
+        </div>
+        <!-- RIGHT ENDS HERE -->
+    </div>
+</div>    
+
+{% endblock office %}

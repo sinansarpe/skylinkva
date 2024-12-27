@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load materializecss %}
+{% load static %}
+
+{% block delete_account %}
+{% autoescape off %}
+
+<div class="container">
+    <div>
+        <div>
+
+            <h3 class="red-text">Are you leaving us?</h3>
+            <p>It was nice to know you were around, even if it was a little.
+            <p>Although we were sad to see you leave, we hope you will come back one day.</p> 
+            <p>Until then, take care and enjoy your flights.</p>
+            <p><strong>When you press the button below, your account will be deleted, continue if you are sure.</strong></p>
+            <form id="delete-form" method="POST" action="{% url 'delete_account' %}">   
+            
+                {% csrf_token %}
+                <button type="submit" class="btn waves-effect waves-light red white-text"><i class="material-icons left">cancel</i>Yes I AM SURE, BYE...</button>
+            </form>  
+
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+function confirmDelete() {
+    if (confirm("Are you sure you want to delete your account?")) {
+    // Submit the form
+    document.getElementById('delete-form').submit();
+    }
+}
+  
+</script>
+
+
+{% endautoescape %}
+{% endblock delete_account %}

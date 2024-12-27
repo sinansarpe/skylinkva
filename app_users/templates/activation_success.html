@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block activation-sent %}
+
+<div class="container">
+  <div class="row" style="padding-top:10vh;">
+    <div class="card s12 m12 l4 xl4 offset-l4 offset-xl4" style="padding:2vh;">
+      <h2>Welcome to SKYLINK Airlines</h2>
+
+      <p>Your registration is complete and we are very happy to have you among us.</p>
+      <p>You will be redirected to the <a href="{% url 'landing' %}">homepage</a> shortly.</p>
+      <p>See you there...</p>
+    </div>
+  </div>
+</div>
+
+{% block page_script %}
+<script>
+setTimeout(function() {
+    window.location.href = "/"; // Replace with your desired URL
+  }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+{% endblock page_script %}
+{% endblock activation-sent %}

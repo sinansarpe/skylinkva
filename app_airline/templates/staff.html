@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/pages/staff.css' %}">
+{% endblock page_css %}
+{% block staff %}
+{% autoescape off %}
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <h3 class="">Staff</h3>
+        <div><i>People, making company the best.</i></div>
+    </div>
+</div>
+<div class="top-space"></div>
+
+<div class="container">
+    <div class="row">
+        {% for staff in staff  %}
+        <div class="col s12 m8 l3 xl3">
+            <div class="card hoverable">
+                <div class="card-image">
+                    <img src="/media/uploads/airline/defaults/default_profile_image.png" class="staff-default-profile-image" style="">
+                    <span class="card-title orange-text text-lighten-2 staff-on-trial" style="font-size:1vh;padding-left:40%;padding-top:1vh;">{% if staff.is_onTrial is True %}<i><strong> on trial</i></strong>{% else %}{% endif %}</span>
+                </div>
+                <div class="center-align"><strong>{{staff.first_name}} {{staff.last_name}} </strong></div>
+                <div class="center-align"><a href="https://ivao.aero/Member.aspx?ID={{staff.ivao_id}}" target=_blank><img src="https://ivao.aero/publrelat/branding/svg_logos/{{staff.division_name.division_abbr}}.svg" alt="" class="staff-ivao-branding-logo"/></a></div>
+                <div class="card-content">
+                    <p class="justify">{{staff.staff_title.staff_position_brief}}</p>
+                </div>
+                <div class="center-align mailto" style=""> <a href="mailto:staff@skylinkva.com" class="orange-text">Contact</a></div>
+                <div class="card-action blue-grey darken-3 orange-text text-lighten-2">
+                    <center><strong>{{staff.staff_title}} </strong></center>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endautoescape %}
+{% endblock staff %}
+{% block page_js %}{% endblock page_js %}
+
+

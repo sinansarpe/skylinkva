@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=" description" content= "Virtual Charter Airline for pilots of well-known virtual aviation networks." >
+<meta name= "robots" content=index, nofollow”> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+<script src="{% static 'materialize/js/materialize.js' %}"></script>
+<script src="https://kit.fontawesome.com/2500dc1bac.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" src="{% static 'materialize/css/materialize.css'%}">
+
+{% block page_css %}
+{% endblock page_css %}
+</head>
+
+<body class='white vignette'>
+{% autoescape off %}
+<header class=''>
+    <nav class="white">
+        <div class="nav-wrapper container">
+            <a href="/" class="brand-logo grey-text"><img style="padding-top:0%;max-width:300px;height:auto; object-fit:cover;" src="{{airline.airline_logo.url}}" /></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons red-text">menu</i></a>
+            <ul class="right hide-on-med-and-down grey-text text-darken-2">
+                {% if user.is_authenticated %}
+                <li><span id="currentTime" style="padding-right:3px;"></span><span style="padding-right:10px;">Z</span></li>
+                <li><b> | </b></li>
+                <li><a href="{% url 'roster' %}" class="grey-text text-darken-2">Roster</a></li>
+                <li><a href="{% url 'staff' %}" class="grey-text text-darken-2">Staff</a></li>
+                <li><a href="{% url 'resources' %}" class="grey-text text-darken-2">Resources</a></li>
+                <li><a href="{% url 'gallery' %}" class="grey-text text-darken-2">Gallery</a></li>
+                <li><b> | </b></li>
+                <li><a href="{% url 'dashboard' %}" class="grey-text text-darken-2">Dashboard</a></li>
+                <li><b> | </b></li>
+                {% for group in user.groups.all %}
+                {% if group.name == 'STAFF' %}
+                <li><a href="{% url 'office' %}" class="black-text">Office</a></li>
+
+                <li><b> | </b></li>
+                {% else %} {% endif %} {% endfor %}                
+                <li><a href="{% url 'signout' %}" class="orange-text">Logout</a></li>
+
+                {% else %}
+                <li><span id="currentTime" style="padding-right:3px;"></span><span style="padding-right:10px;">Z</span></li>
+                <li><b> | </b></li>
+                <li><a href="{% url 'roster' %}" class="grey-text text-darken-2">Roster</a></li>
+                <li><a href="{% url 'staff' %}" class="grey-text text-darken-2">Staff</a></li>
+                <li><a href="{% url 'resources' %}" class="grey-text text-darken-2">Resources</a></li>
+                <li><a href="{% url 'gallery' %}" class="grey-text text-darken-2">Gallery</a></li>
+                <li><b> | </b></li>                
+                <li><a href="{% url 'signin' %}" class="orange-text">Sign-in</a></li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+            
+    <ul class="sidenav" id="mobile-demo">
+      {% if user.is_authenticated %}
+      <li><span id="currentTime" style="padding-right:3px;"></span><span style="padding-right:10px;">Z</span></li>
+      <li><b> | </b></li>
+      <li><a href="{% url 'roster' %}" class="grey-text text-darken-2">Roster</a></li>
+      <li><a href="{% url 'staff' %}" class="grey-text text-darken-2">Staff</a></li>
+      <li><a href="{% url 'resources' %}" class="grey-text text-darken-2">Resources</a></li>
+      <li><a href="#" class="grey-text text-darken-2">Gallery</a></li>
+      <li><b> | </b></li>
+      <li><a href="{% url 'dashboard' %}" class="grey-text text-darken-2">Dashboard</a></li>
+      <li><b> | </b></li>
+      <li><a href="{% url 'signout' %}" class="orange-text">Logout</a></li>
+
+      <li><a href="#" class="orange-text">Office</a></li>
+
+      <li><span id="currentTime" style="padding-right:3px;"></span><span style="padding-right:10px;">Z</span></li>
+      <li><b> | </b></li>
+      <li><a href="{% url 'roster' %}" class="grey-text text-darken-2">Roster</a></li>
+      <li><a href="#" class="grey-text text-darken-2">Staff</a></li>
+      <li><a href="#" class="grey-text text-darken-2">Resources</a></li>
+      <li><b> | </b></li>                
+      <li><a href="{% url 'signin' %}" class="orange-text">Sign-in</a></li>
+
+      {% endif %}
+    </ul>
+</header>
+
+<main>
+
+        {% block landing.html %}                {% endblock landing.html %}    
+        
+        {% block login %}                       {% endblock login %}
+        {% block register %}                    {% endblock register %}
+        {% block activation-sent %}             {% endblock activation-sent %}
+        {% block invalid_activation_link %}     {% endblock invalid_activation_link %}
+        {% block password_reset %}              {% endblock password_reset %}
+        {% block password_reset_success %}      {% endblock password_reset_success %}
+            
+        {% block password_reset_confirm %}      {% endblock password_reset_confirm %}
+        {% block password_reset_complete %}     {% endblock password_reset_complete %}
+
+        {% block delete_account %}              {% endblock delete_account %}
+
+        {% block roster %}                      {% endblock roster %}
+        {% block staff %}                       {% endblock staff %}
+        {% block resources %}                   {% endblock resources %}
+        {% block dashboard %}                   {% endblock dashboard %}    
+        {% block office %}                      {% endblock office %}    
+        {% block gallery %}                     {% endblock gallery %}
+        
+        {% block contact_form %}                {% endblock contact_form %}
+        <!--         
+                 
+        {% block documents %}                   {% endblock documents %}
+        {% block document %}                    {% endblock document %}
+        -->
+</main>
+
+
+
+
+
+<footer class="blue-grey darken-3">
+  <div class="container" style=""> 
+    <div class="row">
+      <div class="col s12 m12 l4 xl4 grey-text">
+        <h5 style="padding-bottom:.5vh;">About Us</h5>
+        <div class="grey-text text-ligten-1 justify">
+              {{airline.airline_about}}
+        </div>
+
+      </div>
+
+      
+      <div class="col s12 m12 l4 xl4 grey-text center-align">
+        <h5 style="padding-bottom:.5vh;">Partners</h5>
+        {% for partner in partners  %}
+        <div class="col s12"><img src="{{partner.partner_logo.url}}" alt="" style="width:40%; height:auto; object-fit:contain;"></div>
+        {% endfor %}
+      </div>
+
+      <div class="col s12 m12 l2 xl2 grey-text">
+        <h5 style="padding-bottom:.5vh;">LEGAL</h5>
+        <div class="grey-text text-lighten-2">
+          <ul>
+            <li><a href="{% url 'privacy' %}" class="grey-text text-lighten-2">Privacy Policy</a></li>
+            <li><a href="{% url 'rules' %}" class="grey-text text-lighten-2">Rules & Regulations</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col s12 m12 l2 xl2 grey-text">
+        <h5 style="padding-bottom:.5vh;">Channels</h5></div>
+        <div class="grey-text text-lighten-2">
+          <ul>
+            <li><a href="{% url 'contact' %}" class="white-text">Contact Form</a></li>
+            <li>Discord [Global]</li>
+            <li>Microsoft Teams</li>
+            <li><a href="/admin/" target=_blank>Admin</li>
+          </ul>
+        </div>
+      </div>
+        
+    </div>
+  </div>
+  <div class="footer-copyright orange darken-1 grey-text text-lighten-4" style="">
+    <div class="container">
+    <i>{{airline.airline_web_copyright}}</i>
+    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+    </div>
+  </div>
+</footer>
+
+
+    {% endautoescape %}
+    
+    <script>
+      $(document).ready(function(){
+        $('.sidenav').sidenav();
+        $('.collapsible').collapsible();
+        $('.materialboxed').materialbox();
+      });
+    </script>
+    <script>
+      function showTime() {
+        let currentDate = new Date();
+        let currentHour = currentDate.getHours();
+        let currentMinute = currentDate.getMinutes();   
+      
+        let currentSecond = currentDate.getSeconds();   
+      
+      
+        // Subtract 3 hours
+        currentHour -= 3;
+      
+        // Ensure hour remains within 0-23 range
+        if (currentHour < 0) {
+          currentHour += 24;
+        }
+      
+        // Format time
+        let formattedTime = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}:${currentSecond.toString().padStart(2, '0')}`;   
+      
+      
+        // Display the time
+        document.getElementById("currentTime").textContent = formattedTime;
+      }
+      
+      // Update time every second
+      setInterval(showTime, 1000);
+      
+      showTime(); // Initial display
+    </script>
+    {% block page-script %}
+
+    {% endblock page-script %}

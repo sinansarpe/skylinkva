@@ -1,0 +1,35 @@
+{% extends "office.html" %}
+{% load materializecss %}
+{% block upload_livery %}
+
+<h5>Upload Aircraft Livery</h5>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|materializecss}}
+    <button type="submit">Upload</button>
+</form>
+
+
+<div class="divider" style="margin-top:1vh; margin-bottom:1vh;"></div>
+
+<h5>Uploaded Liveries</h5>
+{% for livery in liveries %}
+<tr>
+    <td>{{ livery.title }}</td>
+    <td>{{ livery.designator }}</td>
+    <td>
+        <!-- Link to delete page -->
+        <a href="{% url 'livery_delete' livery.pk %}">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock upload_livery %}
+
+
+
+
+
+
+
+
+

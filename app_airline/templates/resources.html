@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_css %}{% endblock page_css %}
+{% block resources %}
+{% autoescape off %}
+
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <a href="{% url 'resources' %}" class="white-text"><h3>Resources</h3></a>
+         
+        <div><i>Everything, making company nicer.</i></div>
+    </div>
+</div>
+<div class="top-space"></div>
+
+<div class="container">
+    <div class="row">
+        <!-- LEFT -->
+        <div class="col s12 m12 l3 xl3">
+            <div class="collection">
+                <a id="privacy" href="{% url 'privacy' %}" class="collection-item">Privacy Policy</a>
+                <a id="rules" href="{% url 'rules' %}" class="collection-item">Rules and Regulations</a>
+                <a id="flightops" href="{% url 'flightops' %}" class="collection-item second">Flight Operations</a>
+                <a id="" href="{% url 'ranking' %}" class="collection-item">Ranking System</a>
+                <a id="" href="{% url 'faq' %}" class="collection-item">Frequently Asked Questions</a>
+              </div>
+        </div>
+        <!-- RIGHT -->
+        <div class="col s12 m12 l8 xl8 offset-l1 offset-xl1">
+            <div id="pages">
+                {% block rules %}               {% endblock rules %}
+                {% block ranking %}             {% endblock ranking %}
+                {% block flightops %}           {% endblock flightops %}
+                {% block faq %}                 {% endblock faq %}
+                {% block privacy %}             {% endblock privacy %}
+            </div>
+            <div>
+            <!-- FAQ -->
+           
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% block page_script %}
+<script>
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+    $('.tooltipped').tooltip();
+
+});
+</script>
+{% endblock page_script %}
+{% endautoescape %}
+{% endblock resources %}
+
+
+

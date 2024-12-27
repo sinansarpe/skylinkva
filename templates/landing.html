@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_css %}
+{% endblock page_css %}
+{% block landing.html %}
+{% autoescape off %}
+
+<div class="" style="">
+
+        <img src="{{landingImage.airline_landing_image.url}}" style="width:100%;height:55vh;object-fit:cover" />
+
+</div>
+
+<div class="container center-align" style="margin-bottom:2vh;">
+    <h3 class="">{{airline.airline_sloganFirstLine}}</h3>
+    <h5><i>{{airline.airline_slogan}}</i></h5>
+</div>
+
+<div class="container">
+    <div class="row" style="padding-top:1%;padding-bottom:1vh;">
+        {% for offers in offers  %}
+        <div class="col s12 m12 l4 xl4">
+            <div class="center-align orange-text text-lighten-1"><h4>{{offers.offer_icon}}</h4></div>
+            <div class="center-align"><h5><i>{{offers.offer_title}}</i></h5></div>
+            <div class="content justify">
+            {{offers.offer_content}}
+            </div>               
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- CENTER BLUE GREY -->
+<div class="blue-grey darken-3" style="width:100%;height:19vh;padding-bottom:1vh;margin-top:1vh;">
+    <div class="container">
+        <div id="news-container" class="row">
+            <div class="col s12 m12 l6 xl6">
+                <h5 class="grey-text" style="padding-top:1vh;">Skylink Latest News</h5>
+                {% for news in news %}
+                <p class="grey-text text-lighten-1">{{news.news|safe}}</span></p>
+                <div class="divider"></div>
+            </div>
+
+            <div class="col s12 m12 l6 xl6">
+                <div class="">
+                    
+                    {% if news.news_img is None %} <img src="" alt=""style="width:100%; height:auto; object-fit:cover;padding:2vh;"> {% else %} 
+                   <img src="{{news.news_img.url}}" style="width:100%; height:auto; object-fit:cover;padding:2vh;"/>{% endif %}
+                   {% endfor %}
+                  </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CENTER BLUE GREY  ENDS HERE-->
+<div class="container">
+        <img src="{{airline.airline_logo.url}}" alt="" style="max-width:300px; height:auto;padding-top:3%;padding-bottom:1%;"/> 
+</div>
+
+
+<div class="container">    
+    <div class="row">
+        <!--LEFT -->
+
+        <div class="col s12 m12 l8 xl8">
+            <h5>Active Flights</h5>
+    
+            <table class="highlight" style="margin-bottom:2vh;">
+                <thead>
+                    <tr>
+                        <center>
+                            <th>Callsign</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Flight State</th>
+                            <th>Type</th>
+                            <th>PIC <i class="grey-text text-lighten-1">(VID)</i></th>
+                            <th>Details</th>
+                        </center>
+                    </tr>
+                </thead>
+
+                {% for client in clients.pilots %}
+                {% if 'INK' in client.callsign and '' in client.flightPlan.aircraftId %}
+                <tbody>
+                    <tr> 
+                        <center>    
+                        <td><div><strong>{{client.callsign|slice:":3"}}</strong> {{client.callsign|slice:"3:"}} </div><div style="font-size:0.7rem";>{{client.flightPlan.flightRules}} / {{client.flightPlan.flightType}} / {{client.flightPlan.peopleOnBoard}}</div></td>
+                        <td>{{client.flightPlan.departureId}}</td>
+                        <td>{{client.flightPlan.arrivalId}} </td>
+                        <td>{{client.lastTrack.state}} </td>
+                        <td>{{client.flightPlan.aircraftId}}</td>
+                        <td><a class="orange-text" href="https://ivao.aero/Login.aspx?r=Member.aspx?Id={{client.userId}}" target=_blank </a>{{client.userId}}</td>
+                        <td><i class="large material-icons grey-text tooltipped"  data-position="right" data-tooltip="{{client.flightPlan.route}}" style="font-size:1vh;">remove_red_eye</i></td>
+                        </center>
+                    </tr>
+                </tbody>
+               
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        <!--RIGHT-->
+        <div class="col s12 m12 l3 xl3 offset-l1 offset-xl1">
+            <div id="active_atcos">
+                <h5></i>Active ATC Services</h5>
+                <table class="highlight">
+                    <thead>
+                        <center>
+                            <th>Callsign</th>
+                            <th>Frequency</th>
+                            <th>ATIS</th>
+
+                        </center>
+                    </thead>
+                    {% for client in clients.atcs %}
+                    {% if 'LT' in client.callsign %}
+                    
+                    <tbody>
+                        <tr> 
+                            <td><i class="fas fa-desktop" style="padding-right:0.5vh;"></i>{{client.callsign}}</td>
+                            <td>{{client.atcSession.frequency}} Mhz. </td>
+                            <td><i class="large material-icons grey-text tooltipped"  data-position="right" data-tooltip="{{client.atis.lines.1}}<br>{{client.atis.lines.2}}<br>{{client.atis.lines.3}}<br>{{client.atis.lines.4}}<br>{{client.atis.lines.5}}<br>{{client.atis.lines.6}}" style="font-size:1vh;">remove_red_eye</i></td>
+                        </tr>
+                    </tbody>
+                    {% endif %}
+                    {% endfor %}
+                </table>    
+            </div>
+        </div>    
+    </div>
+</div>
+
+<div class="" style="margin-bottom:2vh;"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l2 xl2">
+            <div class="card blue-grey darken-4" style="padding:0.5vh;">
+                <div class="icon center-align orange-text text-lighten-1" style="font-size:1.5vh;"><i class="fa-solid fa-file"></i></div>
+                <div class="center-align orange-text text-lighten-1" style="font-size:1vh;">PIREPS</div>
+                <div class="orange-text text-lighten-1 center-align" style="font-size:2vh;">{{pireps.allTime.count}}</div>
+                <div class="center-align"><img src="{{airline.airline_logo_lightBG.url}}" alt="" style="width:100px; height:auto;object-fit:contain;padding-top:1vh;"></div>
+            </div>
+        </div>        
+        <div class="col s12 m12 l2 xl2">
+            <div class="card blue-grey darken-3" style="padding:0.5vh;">
+                <div class="icon center-align orange-text text-lighten-1" style="font-size:1.5vh;"><i class="fa-solid fa-clock"></i></div>
+                <div class="center-align orange-text text-lighten-1" style="font-size:1vh;">Flight Time</div>
+                <div class="orange-text text-lighten-1 center-align" style="font-size:2vh;">{{flightTime.allTime.formatted}}</div>
+                <div class="center-align"><img src="{{airline.airline_logo_lightBG.url}}" alt="" style="width:100px; height:auto;object-fit:contain;padding-top:1vh;"></div>
+            </div>
+        </div>
+        <div class="col s12 m12 l2 xl2">
+            <div class="card blue-grey darken-2" style="padding:0.5vh;">
+                <div class="icon center-align orange-text text-lighten-1" style="font-size:1.5vh;"><i class="fa-solid fa-route"></i></i></div>
+                <div class="center-align orange-text text-lighten-1" style="font-size:1vh;">Distance</div>
+                <div class="orange-text text-lighten-1 center-align" style="font-size:2vh;">{{pireps.allTime.distanceFlown}}</div>
+                <div class="center-align"><img src="{{airline.airline_logo_lightBG.url}}" alt="" style="width:100px; height:auto;object-fit:contain;padding-top:1vh;"></div>
+            </div>
+        </div>
+
+        <div class="col s12 m12 l2 xl2">
+            <div class="card blue-grey darken-1" style="padding:0.5vh;">
+                <div class="icon center-align orange-text text-lighten-1" style="font-size:1.5vh;"><i class="fa-solid fa-person-walking-luggage"></i></i></div>
+                <div class="center-align orange-text text-lighten-1" style="font-size:1vh;">Passenger</div>
+                <div class="orange-text text-lighten-1 center-align" style="font-size:2vh;">{{transport.allTime.passengers}}</div>
+                <div class="center-align"><img src="{{airline.airline_logo_lightBG.url}}" alt="" style="width:100px; height:auto;object-fit:contain;padding-top:1vh;"></div>
+            </div>
+        </div>
+        <div class="col s12 m12 l2 xl2">
+            <div class="card blue-grey" style="padding:0.5vh;">
+                <div class="icon center-align orange-text text-lighten-1" style="font-size:1.5vh;"><i class="fa-solid fa-truck"></i></div>
+                <div class="center-align orange-text text-lighten-1" style="font-size:1vh;">Cargo</div>
+                <div class="orange-text text-lighten-1 center-align" style="font-size:2vh;">{{transport.allTime.cargo}}</div>
+                <div class="center-align"><img src="{{airline.airline_logo_lightBG.url}}" alt="" style="width:100px; height:auto;object-fit:contain;padding-top:1vh;"></div>
+            </div>
+        </div>
+        <div class="col s12 m12 l2 xl2">
+            <div class="card blue-grey lighten-1" style="padding:0.5vh;">
+                <div class="icon center-align orange-text text-lighten-1" style="font-size:1.5vh;"><i class="fa-solid fa-gas-pump"></i></div>
+                <div class="center-align orange-text text-lighten-1" style="font-size:1vh;">Fuel</div>
+                <div class="orange-text text-lighten-1 center-align" style="font-size:2vh;">{{pireps.allTime.fuelUsed}}</div>
+                <div class="center-align"><img src="{{airline.airline_logo_lightBG.url}}" alt="" style="width:100px; height:auto;object-fit:contain;padding-top:1vh;"></div>
+            </div>
+        </div>            
+
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        {% for skylinkevents in skylinkevents  %}
+        <div class="col s12 m12 l3 xl3">
+            <img src="{{skylinkevents.image.url}}" alt="" style="max-width:100%; object-fit:contain;">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- EVENTS 
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12 l6 xl6">
+            <img src="{{hqevents.event_image.url}}" alt="" style="max-width:100%; object-fit:cover;">
+        </div>
+        <div class="col s12 m12 l6 xl6">
+           <a href="{{events.event_url}}"><img src="{{events.event_image.url}}" alt=""style="max-width:100%; object-fit:contain;"></a>
+        </div>
+    </div>
+</div>
+-->
+
+{% for awards in awards %}
+<p>{{ awards. }}</p>
+{% endfor %}
+
+{% endautoescape %}
+
+{% block page_scripts %}
+<script>
+
+</script>
+{% endblock page_scripts %}
+<script>
+   $(document).ready(function(){
+    $('.tooltipped').tooltip();
+    $('.carousel').carousel();
+  }); 
+
+
+
+ 
+</script>
+
+{% endblock landing.html %}
+
+
+
+

@@ -1,0 +1,13 @@
+{% autoescape off %}
+Hello {{user.first_name}},
+
+The reason you have received this e-mail is that, you or someone else using your e-mail address has tried to become a member of our website. If this person is not you, please disregard this e-mail message. After a while, your e-mail address will be automatically deleted from our system. 
+
+If you are the one who wants to become a member, you can complete the registration process by clicking the link below.
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+If you are not redirected when you click, please copy and paste the link into your browser.
+
+- SKYLink Team
+{% endautoescape %}

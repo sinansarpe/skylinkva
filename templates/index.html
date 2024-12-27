@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_css %}
+{% endblock page_css %}
+{% block index %}
+{% autoescape off %}
+{% block staff %}       {% endblock staff %}     
+{% block roster %}      {% endblock roster        %}
+{% endautoescape %}
+{% endblock index %}

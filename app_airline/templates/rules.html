@@ -1,0 +1,18 @@
+{% extends "resources.html" %}
+
+{% block rules %}
+
+{% for rule in rules  %}
+    <div class="card" style="padding:2vh;">
+        <div clasS="center-align blue-grey darken-3 white-text" style="padding:1vh;"><h4 class="blue-grey-text text-lighten-4">{{rule.title}}</h4></div>
+        <div class="justify">{{rule.content}}</div>
+    </div>
+    {% endfor %}
+
+{% endblock rules %}
+
+
+
+
+
+

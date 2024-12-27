@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block dashboard %}
+<div class="page-top blue-grey darken-3">
+    <div class="page-top-header container">
+        <a href="{% url 'dashboard' %}" class="white-text"><h3>Dashboard</h3></a>
+        <div><i>This is your dashboard {{user.first_name}} {{user.last_name}}</i></div>
+        {% if user.is_pilot is True %}
+        <div class="blue-grey-text text-lighten-2">{{data.data.rank.name}} | {{data.data.rank.abbreviation}} | {{data.request.username}}</div>         
+        <div class="blue-grey-text text-lighten-2"><i>You are our valuable pilot since: {{data.data.pilot_created}}</i></div>
+        {% endif %}
+
+    </div>
+</div>
+<div class="top-space"></div>
+
+<div class="container">
+    <div class="row">
+        <!--LEFT -->
+        <div class="col s12 m12 l3 xl3">
+            <div class="collection">
+               
+                {% if user.is_pilot is False %}
+                {% if user.apply_for_pilot is False %}
+                <a id="pilotApplication" href="{% url 'pilot_application' %}" class="collection-item orange darken-1 white-text">Apply for Skylink</a>
+                {% else %}
+                <a id="" href="#" class="collection-item orange white-text">Staff Reviewing Your Application</a>
+                {% endif %}
+                {% endif %}
+                <a id="" href="{% url 'screenshots_form' %}" class="collection-item">Uplaod a Screenshot</a>
+                <a id="" href="{% url 'download_livery' %}" class="collection-item">Download Livery</a>
+                <a id="" href="{% url 'contact' %}" class="collection-item">Contact Staff</a>
+                <a id="" href="{% url 'delete_account' %}" class="collection-item red white-text">Delete Acount</a>
+            </div>
+            {% for group in user.groups.all %}
+            {% if group.name == 'STAFF' %}
+            <div class="collection">
+                <a id="" href="#!" class="collection-item blue-grey darken-3 blue-grey-text text-lighten-4">STAFF INFORMATION BOX</a>
+                <a id="" href="{% url 'applicants' %}" class="collection-item orange lighten-2 white-text">Applicants waiting approval {% if applicants_count is not 0 %}<span class="new badge blue-grey darken-3 white-text">{{applicants_count}}</span>{% else %} {% endif %} </a>
+                <a id="" href="{% url 'approve_screenshots' %}" class="collection-item orange lighten-2 white-text">Screenshots waiting approval {% if approving_ss_count is not 0 %}<span class="new badge blue-grey darken-3 white-text">{{approving_ss_count}}</span>{% else %} {% endif %} </a>
+
+            </div>
+            {% endif %} {% endfor %}
+        </div>
+
+        <!-- RIGHT -->
+        <div class="col s12 m12 l8 xl8 offset-l1 offset-xl1">
+        {% if user.is_pilot is False %}
+        <h5>Welcome to your dashboard {{user.username}},</h5>
+        <p>Dashboard has limited use for Skylink Community Members, but you can still share your screenshots with us.</p>
+        {% if user.apply_for_pilot is True %}
+        <p>Currently our staff is reviewing your application for Skylink VA. You will recieve an e-mail very soon.</p>
+        {% endif %}
+        <p>If you have any questions please also do not hesitate to contact staff at any time.</p>
+        {% endif %}
+
+
+        {% if user.is_pilot is True %}
+        <ul class="collection">
+            <li class="collection-item blue-grey darken-3 white-text">SOME STATISTICS</li>
+        </ul>
+        <ul class="collapsible">
+            <li class="active">
+              <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>PIREPS - 30 days</div>
+              <div class="collapsible-body grey lighten-3">
+
+                    <div class="row">
+                        <div class="col s12 m12 xl2 xl2 blue-grey darken-3 white-text" style="margin:10px; box-sizing:border-box;">
+                            <div class="center-align" style="font-size:1vh;padding-top:1vh;">ACCEPTED</div>
+                            <div class="center-align"><i>(30 days)</i></div>
+                            <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.thirty.accepted}}</div>
+                        </div>
+        
+                        <div class="col s12 m12 xl2 xl2 blue-grey darken-3 white-text" style="margin:10px; box-sizing:border-box;">
+                            <div class="center-align" style="font-size:1vh;padding-top:1vh;">REJECTED</div>
+                            <div class="center-align"><i>(30 days)</i></div>
+                            <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.thirty.rejected}}</div>
+                        </div>
+        
+                        <div class="col s12 m12 xl2 xl2 blue-grey darken-3 white-text" style="margin:10px; box-sizing:border-box;">
+                            <div class="center-align" style="font-size:1vh;padding-top:1vh;">INVALIDATED</div>
+                            <div class="center-align"><i>(30 days)</i></div>
+                            <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.thirty.invalidated}}</div>
+                        </div>
+        
+                        <div class="col s12 m12 xl2 xl2 blue-grey darken-3 white-text" style="margin:10px; box-sizing:border-box;">
+                            <div class="center-align" style="font-size:1vh;padding-top:1vh;">COUNT</div>
+                            <div class="center-align"><i>(30 days)</i></div>
+                            <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.thirty.count}}</div>
+                        </div>                
+        
+                        <div class="col s12 m12 xl2 xl2 blue-grey darken-3 white-text" style="margin:10px; box-sizing:border-box;">
+                            <div class="center-align" style="font-size:1vh;padding-top:1vh;">TIME</div>
+                            <div class="center-align"><i>(30 days)</i></div>
+                            <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.flightTime.thirty.formatted}}</div>
+                        </div> 
+                    </div>
+                    
+              </div>
+            </li>
+            
+            
+            <li>
+              <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>PIREPS - All Time</div>
+              <div class="collapsible-body grey lighten-3">
+                <div class="row">
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-2 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">ACCEPTED</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.accepted}}</div>
+                    </div>
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-2 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">REJECTED</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.rejected}}</div>
+                    </div>
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-2 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">INVALIDATED</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.invalidated}}</div>
+                    </div>
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-2 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">COUNT</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.count}}</div>
+                    </div>                
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-2 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">TIME</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.flightTime.allTime.formatted}}</div>
+                    </div>  
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">insert_chart</i>Other Statistics</div>
+              <div class="collapsible-body grey lighten-3">
+
+                <div class="row">
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-1 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">DISTANCE</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.distanceFlown}}</div>
+                    </div>
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-1 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">FUEL</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.fuelUsed}}</div>
+                    </div>                
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-1 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">PAX</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.transport.allTime.passengers}}</div>
+                    </div>
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-1 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">CARGO</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.transport.allTime.cargo}}</div>
+                    </div>    
+
+                    <div class="col s12 m12 xl2 xl2 blue-grey darken-1 white-text" style="margin:10px; box-sizing:border-box;">
+                        <div class="center-align" style="font-size:1vh;padding-top:1vh;">FPM</div>
+                        <div class="center-align"><i>(All time)</i></div>
+                        <div class="center-align orange-text text-lighten-1" style="padding-top:1vh;font-size:1.5vh;padding-bottom:1vh;">{{data.data.statistics.pireps.allTime.landingRate}}</div>
+                    </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          {% endif %}
+
+          {% block screenshots_form  %}     {% endblock screenshots_form  %}
+          {% block requestRoute %}          {% endblock requestRoute %}
+          {% block download_livery %}       {% endblock download_livery %}
+          {% block confirm_account_delete %}{% endblock confirm_account_delete %}    
+        </div>
+    </div>
+</div>
+
+
+<!-- STAFF APPLICANTS -->
+
+
+<script>
+    $(document).ready(function() {
+        $('#hire-pilot').click(function() {
+            $.ajax({
+                url: '/o/applicant-invited/', // Replace with your actual URL
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}' // Include CSRF token for security
+                },
+
+            });
+        });
+    });
+    
+    
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+   
+</script>
+
+{% endblock dashboard %}
+
+
+
+
+

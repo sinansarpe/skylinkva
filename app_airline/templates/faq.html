@@ -1,0 +1,19 @@
+{% extends "resources.html" %}
+{% load materializecss %}
+
+{% block faq %}
+<div id="faq" class="">
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header orange lighten-1 white-text"><i class="material-icons">question_answer</i><strong>FREQUENTLY ASKED QUESTIONS</strong></div>
+        </li>
+        {% for faq in faq  %}
+        <li>
+            <div class="collapsible-header">{{faq.cat_name.cat_icon}} {{faq.faq_question}}</div>
+            <div class="collapsible-body grey lighten-4"><span>{{faq.faq_answer}}</span></div>        
+        </li>
+        {% endfor %}
+
+    </ul>
+</div> 
+{% endblock faq %}
